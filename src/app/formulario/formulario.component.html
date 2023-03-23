@@ -1,0 +1,20 @@
+<div *ngIf="bandera" class="alert alert-danger alert-dismissible fade show" role="alert">
+    {{alerta}}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" (click)="cerrar()"></button>
+  </div>
+
+<div>
+    <div class="mb-3">
+      <label class="form-label">Codigo: </label>
+      <input type="number" class="form-control" [(ngModel)]="articulosSeleccionado.codigo" placeholder="Ingrese su codigo">
+      <label class="form-label">Descripcion: </label>
+      <input type="text" class="form-control" [(ngModel)]="articulosSeleccionado.descripcion" placeholder="Ingrese una descripcion">
+      <label class="form-label">Precio: </label>
+      <input type="number" class="form-control" [(ngModel)]="articulosSeleccionado.precio" placeholder="Ingrese el precio">
+    </div>
+  </div>
+
+  
+  <button type="button" class="btn btn-primary" (click)="agregar()" *ngIf="status == 'agregar'">Agregar</button>
+  <button type="button" class="btn btn-primary" (click)="modificar()" *ngIf="status == 'modificar'">Modificar</button>
+  <button type="button" class="btn btn-secondary" (click)="regresar()"  style="margin-left: 5px;">Regresar</button>

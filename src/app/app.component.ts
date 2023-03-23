@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { Articulo } from './interface/Articulo';
+import { SidebarComponent } from './sidebar/sidebar.component';
+
 
 @Component({
   selector: 'app-root',
@@ -6,5 +9,23 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'practica02';
+  @ViewChild("sideBar") sideBar : SidebarComponent | undefined;
+
+  articulosSeleccionado : Articulo = {
+    codigo: '',
+    descripcion: '',
+    precio: 0
+  }
+
+  // Método seleccionar
+  seleccionarArticulo(articuloSeleccionado: Articulo) {
+    console.log(articuloSeleccionado);
+    this.articulosSeleccionado = articuloSeleccionado;
+  }
+
+  showSidebar(){
+    this.sideBar?.cerrarSidebar();
+  }
+
 }
+
