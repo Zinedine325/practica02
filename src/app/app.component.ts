@@ -12,9 +12,9 @@ export class AppComponent {
   @ViewChild("sideBar") sideBar : SidebarComponent | undefined;
 
   articulosSeleccionado : Articulo = {
-    codigo: '',
-    descripcion: '',
-    precio: 0
+    Codigo: '',
+    Descripcion: '',
+    Precio: 0
   }
 
   // Método seleccionar

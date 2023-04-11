@@ -1,0 +1,26 @@
+<div *ngIf="bandera" class="alert alert-danger alert-dismissible fade show" role="alert">
+    {{alerta}}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" (click)="cerrar()"></button>
+  </div>
+
+<div>
+    <div class="mb-3">
+      <label class="form-label">Id: </label>
+      <input type="number" class="form-control" [(ngModel)]="proveedoresSeleccionado.Id" placeholder="Ingrese Id">
+      <label class="form-label">Codigo proveedor: </label>
+      <input type="text" class="form-control" [(ngModel)]="proveedoresSeleccionado.CodigoProveedor" placeholder="Ingrese el codigo del proveedor">
+      <label class="form-label">Razon social: </label>
+      <input type="text" class="form-control" [(ngModel)]="proveedoresSeleccionado.RazonSocial" placeholder="Ingrese la razon social">
+      <label class="form-label">RFC: </label>
+      <input type="text" class="form-control" [(ngModel)]="proveedoresSeleccionado.Rfc" placeholder="Ingrese el RFC">
+      <label class="form-label">Direccion: </label>
+      <input type="text" class="form-control" [(ngModel)]="proveedoresSeleccionado.Direccion" placeholder="Ingrese la direccion">
+      <label class="form-label">Email: </label>
+      <input type="text" class="form-control" [(ngModel)]="proveedoresSeleccionado.Email" placeholder="Ingrese el email">
+    </div>
+  </div>
+
+  
+  <button type="button" class="btn btn-primary" (click)="agregar()" *ngIf="status == 'agregar'">Agregar</button>
+  <button type="button" class="btn btn-primary" (click)="modificar()" *ngIf="status == 'modificar'">Modificar</button>
+  <button type="button" class="btn btn-secondary" (click)="regresar()"  style="margin-left: 5px;">Regresar</button>

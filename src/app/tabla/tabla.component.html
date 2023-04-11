@@ -12,9 +12,9 @@
     </thead>
     <tbody>
       <tr *ngFor="let articulo of articulos">
-        <td>{{ articulo.codigo }}</td>
-        <td>{{ articulo.descripcion | titlecase }}</td>
-        <td>{{ articulo.precio | currency }}</td>
+        <td>{{ articulo.Codigo }}</td>
+        <td>{{ articulo.Descripcion | titlecase }}</td>
+        <td>{{ articulo.Precio | currency }}</td>
         <td><button type="button" class="btn btn-danger" (click)="borrar(articulo)">Borrar</button></td>
         <td><button type="button" class="btn btn-secondary" (click)="seleccionar(articulo)">Seleccionar</button></td>
       </tr>

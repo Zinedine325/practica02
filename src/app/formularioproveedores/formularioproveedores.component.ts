@@ -1,26 +1,30 @@
 import { Component, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Articulo } from '../interface/Articulo';
-import { ArticulosService } from '../services/articulos.service';
-import Swal from 'sweetalert2';
+import { Proveedor } from '../interface/Proveedor';
+import { ProveedoresService } from '../services/proveedores.service';
+import Swal from 'sweetalert2'; 
 
 @Component({
-  selector: 'app-formulario',
-  templateUrl: './formulario.component.html',
-  styleUrls: ['./formulario.component.css']
+  selector: 'app-formularioproveedores',
+  templateUrl: './formularioproveedores.component.html',
+  styleUrls: ['./formularioproveedores.component.css']
 })
-export class FormularioComponent {
+export class FormularioproveedoresComponent {
   bandera : boolean = false; // bandera para comprobar el estado de la alerta
   alerta : string = '';
   status : string = '';
 
-  @Input() articulosSeleccionado : Articulo = {
-    Codigo: '',
-    Descripcion: '',
-    Precio: 0
+  @Input() proveedoresSeleccionado : Proveedor = {
+    Id: 0,
+    CodigoProveedor: '',
+    RazonSocial: '',
+    Rfc: '',
+    Direccion: '',
+    Email: ''
+
   }
 
-  constructor(private articulosService : ArticulosService, 
+  constructor(private proveedoresService : ProveedoresService, 
               private activatedRoute : ActivatedRoute,
               private router : Router){
     
@@ -32,12 +36,12 @@ export class FormularioComponent {
     this.activatedRoute.params.subscribe(params =>{
       console.log(params);
       console.log(params["id"]);
-      const id = params["id"];
-      this.status = id == undefined ? "agregar" : "modificar";
-      // this.articulosSeleccionado = id==undefined ? this.articulosSeleccionado : this.articulosService.seleccionar(id);
-      if(id !== undefined) {
-        this.articulosService.seleccionar(id).subscribe(data =>{
-          this.articulosSeleccionado = data;
+      const Id = params["id"];
+      this.status = Id == undefined ? "agregar" : "modificar";
+      // this.proveedoresSeleccionado = Id==undefined ? this.proveedoresSeleccionado : this.proveedoresService.seleccionar(Id);
+      if(Id !== undefined) {
+        this.proveedoresService.seleccionar(Id).subscribe(data =>{
+          this.proveedoresSeleccionado = data;
         });
       }
     });
@@ -60,7 +64,7 @@ export class FormularioComponent {
 
   // Método agregar
   agregar() {
-    if (this.articulosSeleccionado.Codigo == '' || this.articulosSeleccionado.Descripcion == '' || this.articulosSeleccionado.Precio == 0)
+    if (this.proveedoresSeleccionado.Id == 0 || this.proveedoresSeleccionado.CodigoProveedor == '' || this.proveedoresSeleccionado.RazonSocial == '' || this.proveedoresSeleccionado.Rfc == '' || this.proveedoresSeleccionado.Direccion == '' || this.proveedoresSeleccionado.Email == '')
     {
       //alert("Llene todos los campos");
       this.bandera = true;
@@ -76,22 +80,32 @@ export class FormularioComponent {
       return;
     }*/
 
-    if (this.articulosService.validacion(this.articulosSeleccionado)) {
+    if (this.proveedoresService.validacion(this.proveedoresSeleccionado)) {
       this.bandera = true;
       this.alerta = "No es posible que existan dos articulos con el mismo codigo";
       return;
     } 
 
-    // this.articulosService.agregar({
-    //   ...this.articulosSeleccionado
+    // this.proveedoresService.agregar({
+    //   ...this.proveedoresSeleccionado
     // });
-
-    this.articulosService.agregar(({...this.articulosSeleccionado})).subscribe(data => {
+    // this.proveedoresSeleccionado = {
+    //   Id: 0,
+    //   CodigoProveedor: '',
+    //   RazonSocial: '',
+    //   Rfc: '',
+    //   Direccion: '',
+    //   Email: ''
+    // }
+    this.proveedoresService.agregar(({...this.proveedoresSeleccionado})).subscribe(data => {
       console.log(data);
-      this.articulosSeleccionado = {
-        Codigo: '',
-        Descripcion: '',
-        Precio: 0
+      this.proveedoresSeleccionado = {
+        Id: 0,
+        CodigoProveedor: '',
+        RazonSocial: '',
+        Rfc: '',
+        Direccion: '',
+        Email: ''
       }
     });
   }
@@ -109,15 +123,14 @@ export class FormularioComponent {
       confirmButtonText: 'Sí, modifica el elemento'
     }).then((result) => {
       if (result.isConfirmed) {
-        // this.articulosService.modificar(this.articulosSeleccionado);
-        this.articulosService.modificar(this.articulosSeleccionado).subscribe(data =>{
+        // this.proveedoresService.modificar(this.proveedoresSeleccionado);
+        this.proveedoresService.modificar(this.proveedoresSeleccionado).subscribe(data =>{
           console.log(data);
-          this.router.navigate(['/articulos']);
-        });
-        
+        this.router.navigate(['/proveedores']);
+      });
         // Swal.fire(
-        //   'Deleted!',
-        //   'Your file has been deleted.',
+        //   'Modificado!',
+        //   'Su proveedor ha sido modificado.',
         //   'success'
         // )
       }
@@ -126,7 +139,7 @@ export class FormularioComponent {
 
   // Método regresar
   regresar() {
-    this.router.navigate(['/articulos']);
+    this.router.navigate(['/proveedores']);
   }
 
 }
